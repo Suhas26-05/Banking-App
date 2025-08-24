@@ -9,40 +9,41 @@ With this app, users can:
 - Retrieve account details
 - View all accounts
 - Delete accounts
+- View all Transaction
 
 ---
 
 ## 📂 File Structure
 ```
-
-Banking-App/
-│── .idea/                       # IDE config files
-│── .mvn/                        # Maven wrapper
-│── pom.xml                      # Maven dependencies & config
-│── src/
-│   ├── main/
-│   │   ├── java/com/example/Banking\_App/
-│   │   │   ├── controller/      # REST controllers
-│   │   │   │   └── AccountController.java
-│   │   │   ├── dto/             # DTO (Data Transfer Objects)
-│   │   │   │   └── AccountDto.java
-│   │   │   ├── entity/          # JPA Entities
-│   │   │   │   └── Account.java
-│   │   │   ├── mapper/          # Entity <-> DTO mapping
-│   │   │   │   └── AccountMapper.java
-│   │   │   ├── repository/      # Spring Data JPA Repositories
-│   │   │   │   └── AccountRepository.java
-│   │   │   ├── services/        # Service layer
-│   │   │   │   ├── AccountServices.java
-│   │   │   │   └── impl/AccountServicesImpl.java
-│   │   │   └── BankingAppApplication.java   # Main Spring Boot App
-│   │   └── resources/
-│   │       ├── application.properties       # App configuration
-│   │       ├── static/                      # Static resources
-│   │       └── templates/                   # Thymeleaf templates
-│   └── test/                                # Unit & integration tests
-│── target/                                  # Build output
-│── .gitattributes
+Banking_App/
+│── src/main/java/com/example/Banking_App/
+│   │── BankingAppApplication.java          # Main Spring Boot app
+│   │
+│   ├── controller/
+│   │   └── AccountController.java          # REST API endpoints
+│   │
+│   ├── dto/
+│   │   └── AccountDto.java                 # Data Transfer Object
+│   │
+│   ├── entity/
+│   │   ├── Account.java                    # Account Entity
+│   │   └── Transaction.java                # Transaction Entity
+│   │
+│   ├── mapper/
+│   │   └── AccountMapper.java              # DTO ↔ Entity converter
+│   │
+│   ├── repository/
+│   │   ├── AccountRepository.java          # JPA Repository
+│   │   └── TransactionRepository.java      # JPA Repository
+│   │
+│   ├── services/
+│   │   └── AccountServices.java            # Interface
+│   │
+│   └── services/impl/
+│       └── AccountServicesImpl.java        # Service Implementation
+│
+└── src/main/resources/
+    └── application.properties              # DB Config
 
 ````
 
@@ -60,13 +61,15 @@ Banking-App/
 ---
 
 ## 🚀 Features
-- ➕ Create a new bank account  
-- 📄 Retrieve account details by ID  
-- 💰 Deposit money into an account  
-- 💸 Withdraw money (with insufficient funds check)  
-- 📋 Get all accounts  
-- 🗑️ Delete an account  
-- ✅ Layered architecture with DTOs & Mappers  
+- ➕ Create a new bank account
+- 📄 Retrieve account details by ID
+- 💰 Deposit money into an account
+- 💸 Withdraw money (with insufficient funds check)
+- 📋 Get all accounts
+- 🗑️ Delete an account
+- 📜 View all transactions of an account
+- 📈 Apply monthly interest to all accounts
+- ✅ Layered architecture with DTOs & Mappers
 
 ---
 
@@ -114,6 +117,7 @@ spring.jpa.hibernate.ddl-auto=update
 {
   "accountHolderName": "Alice",
   "balance": 1000
+  "accountType": "SAVINGS"
 }
 ```
 
@@ -149,3 +153,10 @@ spring.jpa.hibernate.ddl-auto=update
 
 `DELETE /api/accounts/{id}`
 
+###📜 Get Transactions for an Account
+
+`GET /api/accounts/{id}/transactions`
+
+###📈 Apply Monthly Interest
+
+`POST /api/accounts/apply-interest`
