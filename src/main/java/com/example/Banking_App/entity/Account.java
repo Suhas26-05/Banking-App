@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,5 +19,10 @@ public class Account {
 
     @Column(name = "Account_Holder_Name")
     private String AccountHolderName;
+
     private double Balance;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "Account_Type")
+    private AccountType accountType;   // ✅ Savings / Checking
 }

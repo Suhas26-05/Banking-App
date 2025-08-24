@@ -2,24 +2,25 @@ package com.example.Banking_App.mapper;
 
 import com.example.Banking_App.dto.AccountDto;
 import com.example.Banking_App.entity.Account;
+import com.example.Banking_App.entity.AccountType;
 
 public class AccountMapper {
 
     public static Account mapToAccount(AccountDto accountDto){
-        Account account = new Account(
+        return new Account(
                 accountDto.getId(),
                 accountDto.getAccountHolderName(),
-                accountDto.getBalance()
+                accountDto.getBalance(),
+                AccountType.valueOf(accountDto.getAccountType().toUpperCase())
         );
-        return account;
     }
 
     public static AccountDto maptoAccountDto(Account account){
-        AccountDto accountDto = new AccountDto(
+        return new AccountDto(
                 account.getId(),
                 account.getAccountHolderName(),
-                account.getBalance()
+                account.getBalance(),
+                account.getAccountType().name()
         );
-        return accountDto;
     }
 }

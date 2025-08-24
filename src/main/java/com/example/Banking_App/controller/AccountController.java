@@ -1,6 +1,7 @@
 package com.example.Banking_App.controller;
 
 import com.example.Banking_App.dto.AccountDto;
+import com.example.Banking_App.entity.Transaction;
 import com.example.Banking_App.services.AccountServices;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class AccountController {
     // Withdraw Rest API
     @PutMapping("/{id}/withdraw")
     public ResponseEntity<AccountDto> withdraw(@PathVariable Long id,
-                                              @RequestBody Map<String, Double> request){
+                                               @RequestBody Map<String, Double> request){
         Double amount = request.get("Amount");
         AccountDto accountDto = accountServices.withdraw(id, amount);
         return ResponseEntity.ok(accountDto);
@@ -62,5 +63,18 @@ public class AccountController {
     public ResponseEntity<String> deleteAccount(@PathVariable Long id){
         accountServices.deleteAccount(id);
         return ResponseEntity.ok("Account is Deleted Successfully");
+    }
+
+    // ✅ Get all transactions for an account
+    @GetMapping("/{id}/transactions")
+    public ResponseEntity<List<Transaction>> getTransactions(@PathVariable Long id) {
+        return ResponseEntity.ok(accountServices.getTransactionsByAccount(id));
+    }
+
+    // ✅ Apply interest manually
+    @PostMapping("/apply-interest")
+    public ResponseEntity<String> applyInterest() {
+        accountServices.applyMonthlyInterest();
+        return ResponseEntity.ok("Interest applied to all savings accounts");
     }
 }
